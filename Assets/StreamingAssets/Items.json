@@ -1,0 +1,33 @@
+[
+    {
+        "id": 0,
+        "title": "Steel Gloves",
+        "value": 6,
+        "stats" : {
+            "power": 1,
+            "defence": 4,
+            "vitality": 2
+        },
+        "description": "Gloves made from steel.",
+        "stackable": false,
+        "rarity": 2,
+        "slug": "gloves"
+        
+    },
+    
+    {
+         "id": 1,
+        "title": "Greatsword",
+        "value": 54,
+        "stats" : {
+            "power": 56,
+            "defence": 2,
+            "vitality": 54
+        },
+        "description": "Ancient sword, it's still sharp.",
+        "stackable": true,
+        "rarity": 6,
+        "slug": "sword"
+        
+    }
+]
