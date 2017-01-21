@@ -33,6 +33,11 @@ public class InventoryController : MonoBehaviour {
 
         AddItem(0);
         AddItem(1);
+        AddItem(1);
+        AddItem(1);
+        AddItem(1);
+        AddItem(1);
+        AddItem(1);
 
         playerWeaponController = GameObject.Find("Player").GetComponent<PlayerWeaponController>();
         List<BaseStat> swordStats = new List<BaseStat>();
@@ -53,19 +58,60 @@ public class InventoryController : MonoBehaviour {
     public void AddItem(int id) {
 
         Item itemToAdd = database.FetchItemByID(id);
-        for (int i = 0; i < items.Count; i++) {
+        if (itemToAdd.Stackable && CheckIteminInventory(itemToAdd))
+        {
 
-            if (items[i].ID == -1) {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].ID == id)
+                {
 
-                items[i] = itemToAdd;
-                GameObject itemObj = Instantiate(inventoryItem);
-                itemObj.transform.SetParent(slots[i].transform);
-                itemObj.GetComponent<Image>().sprite = itemToAdd.Sprite;
-                itemObj.name = itemToAdd.Title;
-                break;
+                    ItemData data = slots[i].transform.GetChild(0).GetComponent<ItemData>();
+                    data.amount++;
+                    data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
+                    break;
+                }
+
             }
+
         }
 
+        else
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+
+                if (items[i].ID == -1)
+                {
+
+                    items[i] = itemToAdd;
+                    GameObject itemObj = Instantiate(inventoryItem);
+                    itemObj.transform.SetParent(slots[i].transform);
+                    itemObj.GetComponent<Image>().sprite = itemToAdd.Sprite;
+                    itemObj.name = itemToAdd.Title;
+                    ItemData data = slots[i].transform.GetChild(0).GetComponent<ItemData>();
+                    data.amount = 1;
+                    break;
+                }
+            }
+
+        }
+
+    }
+
+    bool CheckIteminInventory(Item item) {
+
+        for (int i = 0; i < items.Count; i++)
+        {
+
+            if (items[i].ID == item.ID) {
+
+                return true;
+            }
+
+        }
+
+        return false;
     }
      
 }
